@@ -1,0 +1,20 @@
+{
+  "name": "Symfony 8.2 Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",   // Intellisense PHP
+        "xdebug.php-debug",                      // Debug PHP
+        "junstyle.php-cs-fixer",                 // PHP CS Fixer (code style)
+        "usernamehw.errorlens",                  // Affiche les erreurs dans l’éditeur
+        "mblode.twig-language-2",                // Support Twig
+        "phproberto.vscode-php-getters-setters", // Génération getters/setters
+        "symfony.symfony-vscode"                 // Outils Symfony
+      ]
+    }
+  },
+  "forwardPorts": [8000]
+}
