@@ -1,0 +1,11 @@
+.navbar-nav .nav-item {
+    border-right: none !important;
+}
+
+.navbar-nav .nav-item::after {
+    content: none !important;
+}
+
+.dropdown-menu .dropdown-item {
+    border-bottom: none !important;
+}
