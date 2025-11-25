@@ -40,15 +40,26 @@
                     <a class="nav-link" href="#">Recommandé</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Catégorie</a>
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">film</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Horreur</a>
-                        <a class="dropdown-item" href="#">Drame</a>
-                        <a class="dropdown-item" href="#">Comédie</a>
-                        <a class="dropdown-item" href="#">Science-fiction</a>
+                        <a class="dropdown-item" href="{{path('app_film')}}">Listes des film</a>
+
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Catégorie</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{path('app_Categorie')}}">Liste categorie</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Avis</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{path('app_Avis')}}">Liste Avis</a>
+                    </div>
+                </li>
+
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Abonnement</a>
                     <div class="dropdown-menu">
