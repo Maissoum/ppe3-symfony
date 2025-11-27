@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche du film{% endblock %}
+
+{% block body %}
+<h1 class="pt-3 text-center">🎬 Fiche du Film</h1>
+<hr class="mb-4">
+
+<div class="container">
+
+    <div class="card shadow-lg p-4 mb-4" style="border-radius: 15px;">
+
+        <div class="row">
+
+            {# --- Affiche du film --- #}
+            <div class="col-md-4 d-flex justify-content-center align-items-center mb-3">
+                <img src="{{ lefilm.image }}"
+                     alt="Affiche"
+                     class="img-fluid rounded"
+                     style="max-width: 250px;">
+            </div>
+
+            {# --- Informations du film --- #}
+            <div class="col-md-8">
+
+                <h2 class="mb-3">{{ lefilm.titre }}</h2>
+
+                <p class="text-muted">
+                    <span class="badge bg-primary me-2">
+                        Sorti en {{ lefilm.dateSorti }}
+                    </span>
+
+                    <span class="badge bg-success">
+                        {{ lefilm.duree }} min
+                    </span>
+                </p>
+
+                <h5 class="mt-4 mb-2">Description</h5>
+                <p style="font-size: 1.05em;">
+                    {{ lefilm.description }}
+                </p>
+
+                <h5 class="mt-4 mb-2">Catégories</h5>
+                {% for cat in lefilm.cats %}
+                    <span class="badge me-1"
+                          style="background-color: {{ cat.couleur }}; color: white; font-size: 0.95em;">
+                        {{ cat.nom }}
+                    </span>
+                {% else %}
+                    <em>Aucune catégorie</em>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+
+    {# --- AVIS --- #}
+    <div class="card shadow p-3" style="border-radius: 12px;">
+        <h3 class="text-center mb-3">📝 Avis des spectateurs</h3>
+
+        {% if lefilm.aviss|length > 0 %}
+            <table class="table table-striped align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Note</th>
+                        <th>Commentaire</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for avis in lefilm.aviss %}
+                    <tr>
+                        <td>
+                            <span class="badge bg-warning text-dark" style="font-size: 1.1em;">
+                                {{ avis.note }}/5
+                            </span>
+                        </td>
+                        <td style="max-width: 500px;">
+                            {{ avis.commentaire }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-center"><em>Aucun avis pour ce film.</em></p>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

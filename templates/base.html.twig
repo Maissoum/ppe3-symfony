@@ -17,7 +17,7 @@
     <body>
        
      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">MattStrem</a>
+        <a class="navbar-brand" href="{{path('app_accueil')}}">MattStrem</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -26,20 +26,20 @@
                <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">film</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">liste des films</a>
+                            <a class="dropdown-item" href="{{path('film')}}">liste des films</a>
                         </div>
                     </li>
 
                 <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categorie</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">liste des categorie</a>
+                            <a class="dropdown-item" href="{{path('categorie')}}">liste des categorie</a>
                         </div>
                     </li>
                   <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Avis</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Tous vos avis</a>
+                            <a class="dropdown-item" href="{{path('avis')}}">Tous vos avis</a>
                         </div>
                     </li>
                   <li class="nav-item dropdown">

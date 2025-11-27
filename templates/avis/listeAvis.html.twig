@@ -1,1 +1,43 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Liste des avis{% endblock %}
+
+{% block body %}
+<h1 class="text-center pt-3">📝 Liste des avis</h1>
+<hr>
+
+<div class="container mt-4">
+    {% if lesaviss|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Film</th>
+                        <th scope="col">Note</th>
+                        <th scope="col">Commentaire</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for avis in lesaviss %}
+                        <tr>
+                            <td>{{ avis.id }}</td>
+                            <td>
+                                <a href="{{ path('fichefilm', {'id': avis.flms.id}) }}">
+                                    {{ avis.flms.titre }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge bg-warning text-dark">{{ avis.note }}/10</span>
+                            </td>
+                            <td class="text-start">{{ avis.commentaire }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center"><em>Aucun avis trouvé.</em></p>
+    {% endif %}
+</div>
+{% endblock %}

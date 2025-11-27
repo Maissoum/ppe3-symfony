@@ -3,49 +3,58 @@
 {% block title %}liste film{% endblock %}
 
 {% block body %}
-<h1 class="pt-2 text-center" >liste film</h1>
+<h1 class="pt-2 text-center">liste film</h1>
 <hr>
-    <div class="row pt-2">
-        {% for lefilm in lesfilms %}
 
-        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+<div class="row pt-2">
+    {% for lefilm in lesfilms %}
 
-            <div class="card mb-3">
-                <h3 class="card-header"><a href="{{path('fichefilm', {'id': lefilm.id})}}">{{lefilm.titre}}</a></h3>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <span class="badge" style="background-color: purple;">
-                            {{lefilm.duree}}
-                        </span>
-                    </h5>
-                </div>
+    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+        <div class="card mb-3">
+            <h3 class="card-header">
+                <a href="{{ path('fichefilm', {'id': lefilm.id}) }}">{{ lefilm.titre }}</a>
+            </h3>
 
-                <img class="avatar mx-auto d-block" style="height: auto; width: 200px; display: block;" src="{{lefilm.image}}" alt="Card image">
-                <div class="card-body">
-                    <p class="card-text">{{lefilm.date_sorti}}</p>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">{{lefilm.description|slice(0,10)|raw}}...</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> 
-                    {% for lacat in lefilm.cats %}
-                     <span class="badge" style="background-color: {{lacat.couleur}};"> {{lacat.nom}}</span>
-                    {% endfor %}
-                    </li>
-                    {% set nb = lefilm.aviss|lengt %}
-                    
-                    <li class="list-group-item">
-                    {{nb}} {% if nb>1 %} avis {% else %} avis {% endif %}
-                        
-                    </li>
-                </ul>
-
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span class="badge" style="background-color: purple;">
+                        {{ lefilm.duree }} min
+                    </span>
+                </h5>
             </div>
 
-        </div>
+            <img class="avatar mx-auto d-block" style="height:auto;width:200px;" src="{{ lefilm.image }}" alt="Card image">
 
+            <div class="card-body">
+                <p class="card-text">
+                    Année : {{ lefilm.dateSorti }}
+                </p>
+            </div>
+
+            <div class="card-body">
+                <p class="card-text">{{ lefilm.description|slice(0, 50) }}...</p>
+            </div>
+
+            <ul class="list-group list-group-flush">
+
+                <li class="list-group-item">
+                    {% for lacat in lefilm.cats %}
+                        <span class="badge" style="background-color: {{ lacat.couleur }};">
+                            {{ lacat.nom }}
+                        </span>
+                    {% endfor %}
+                </li>
+
+                {% set nb = lefilm.aviss|length %}
+                <li class="list-group-item">
+                    {{ nb }} avis
+                </li>
+
+            </ul>
+        </div>
+    </div>
 
     {% endfor %}
+</div>
 
-    {% endblock %}
+{% endblock %}
