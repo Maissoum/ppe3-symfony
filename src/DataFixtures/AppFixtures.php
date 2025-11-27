@@ -37,6 +37,8 @@ class AppFixtures extends Fixture
         $films = [];
         $fichierFilm = fopen(__DIR__ . "/film.csv", "r");
 
+        $imageNum = 1; // compteur pour les images
+
         while (($data = fgetcsv($fichierFilm)) !== false) {
             if (count($data) < 5) continue;
 
@@ -44,15 +46,17 @@ class AppFixtures extends Fixture
             $film->setTitre($data[1])
                 ->setDescription($data[2])
                 ->setDuree((int)$data[3])
-                ->setDateSorti((int) str_replace("-", "", $data[4])) // ou autre format
-                ->setImage("https://via.placeholder.com/200"); // car image obligatoire
+                ->setDateSorti((int) explode('-', $data[4])[0]) // juste l'année
+                ->setImage("https://lorempicture.point-sys.com/400/300/ville/$imageNum/");
+
+            // Incrémenter et revenir à 1 si > 30
+            $imageNum++;
+            if ($imageNum > 30) $imageNum = 1;
 
             // ❗ AFFECTER 1 à 3 catégories aléatoires
             $nbCat = rand(1, 3);
             $keys = array_rand($categories, $nbCat);
-
             if (!is_array($keys)) $keys = [$keys];
-
             foreach ($keys as $k) {
                 $film->addCat($categories[$k]);
             }

@@ -12,7 +12,6 @@
             <table class="table table-striped table-hover table-bordered align-middle text-center">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">ID</th>
                         <th scope="col">Film</th>
                         <th scope="col">Note</th>
                         <th scope="col">Commentaire</th>
@@ -21,14 +20,23 @@
                 <tbody>
                     {% for avis in lesaviss %}
                         <tr>
-                            <td>{{ avis.id }}</td>
                             <td>
-                                <a href="{{ path('fichefilm', {'id': avis.flms.id}) }}">
-                                    {{ avis.flms.titre }}
-                                </a>
+                                {% if avis.flms %}
+                                    <a href="{{ path('fichefilm', {'id': avis.flms.id}) }}">
+                                        {{ avis.flms.titre }}
+                                    </a>
+                                {% else %}
+                                    <em>Film supprimé</em>
+                                {% endif %}
                             </td>
                             <td>
-                                <span class="badge bg-warning text-dark">{{ avis.note }}/10</span>
+                                {% if avis.note <= 4 %}
+                                    <span class="badge bg-danger text-white">{{ avis.note }}/10</span>
+                                {% elseif avis.note <= 7 %}
+                                    <span class="badge bg-warning text-dark">{{ avis.note }}/10</span>
+                                {% else %}
+                                    <span class="badge bg-success text-white">{{ avis.note }}/10</span>
+                                {% endif %}
                             </td>
                             <td class="text-start">{{ avis.commentaire }}</td>
                         </tr>
