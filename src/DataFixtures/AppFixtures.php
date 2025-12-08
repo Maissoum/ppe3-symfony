@@ -90,6 +90,40 @@ class AppFixtures extends Fixture
 
         fclose($fichierAvis);
 
+                /* ------------------------
+            4) Import des ABONNEMENTS
+        ------------------------ */
+        $fichierAbo = fopen(__DIR__ . "/abonnement.csv", "r");
+
+        while (($data = fgetcsv($fichierAbo, separator: ";")) !== false) {
+
+            if (count($data) < 5) continue;
+
+            $abo = new \App\Entity\Abonnement();
+            $abo->setNom($data[1])
+                ->setPrix((float)$data[2])
+                ->setDuree((int)$data[3])
+                ->setDescription($data[4]);
+
+            $manager->persist($abo);
+        }
+
+        fclose($fichierAbo);
+
+
+
+
         $manager->flush();
+
+
+
+
+
+
+
     }
+
+    
+
+
 }

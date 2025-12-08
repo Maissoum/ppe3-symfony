@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos abonnements{% endblock %}
+
+{% block body %}
+<h1 class="text-center pt-3 mb-4">💳 Nos Abonnements</h1>
+
+<div class="container">
+    <div class="row g-4">
+        {% for abo in lesabonnements %}
+            <div class="col-md-4">
+                <div class="card text-white shadow-lg" 
+                     style="border-radius: 15px; 
+                            background: linear-gradient(135deg, {{ random(['#6a11cb', '#2575fc', '#ff416c', '#ffb347']) }}, #ffffff); 
+                            height: 100%;">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <h3 class="card-title text-center">{{ abo.nom }}</h3>
+                        <p class="card-text text-center">{{ abo.description }}</p>
+
+                        <ul class="list-group list-group-flush mb-3">
+                            <li class="list-group-item text-center">
+                                <strong>Prix :</strong> {{ abo.prix }} €
+                            </li>
+                            <li class="list-group-item text-center">
+                                <strong>Durée :</strong> {{ abo.duree }} jours
+                            </li>
+                        </ul>
+
+                        <div class="d-grid">
+                            <a href="{{ path('ficheabonnement', {'id': abo.id}) }}" 
+                               class="btn btn-dark btn-block">
+                               Voir plus
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center"><em>Aucun abonnement disponible pour le moment.</em></p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AvisController extends AbstractController
 {
-    #[Route('/Avis', name: 'avis', methods: ['GET'])]
+    #[Route('/avis', name: 'avis', methods: ['GET'])]
     public function listeAvis(AvisRepository $repo): Response
     {
         $aviss = $repo->findAll();
