@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Catégories{% endblock %}
+
+{% block body %}
+<h1 class="pt-2 text-center">𝔾𝕖𝕤𝕥𝕚𝕠𝕟 𝕕𝕖𝕤 𝕔𝕒𝕥égories</h1>
+<a href="{{ path('admin_categorie_ajout') }}" class="btn btn-info mb-3">Ajouter une catégorie</a>
+
+{# ======= AFFICHAGE DES MESSAGES FLASH ======= #}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} text-center font-weight-bold">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<hr>
+
+<table class="table table-hover table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Description</th>
+            <th scope="col">Couleur</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cat in lesCategories %}
+            <tr>
+                <td>{{ cat.nom }}</td>
+                <td>{{ cat.description }}</td>
+                <td>
+                    <span class="badge" style="background-color: {{ cat.couleur }}; color: white;">
+                        {{ cat.couleur }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ path('admin_categorie_modif', {'id': cat.id}) }}" class="btn btn-primary">
+                        <i class="fa-regular fa-pen-to-square"></i> Modifier
+                    </a>
+                    <a href="{{ path('admin_categorie_supp', {'id': cat.id}) }}" class="btn btn-danger"
+                       onclick="return confirm('Etes-vous sûr de vouloir supprimer la catégorie : {{ cat.nom }} ?');">
+                        <i class="far fa-trash-alt"></i> Supprimer
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
