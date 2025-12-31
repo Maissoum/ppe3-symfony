@@ -7,6 +7,10 @@
 <hr>
 
 <div class="container mt-4">
+    <div class="mb-3 text-end">
+        <a href="{{ path('admin_avis_ajout') }}" class="btn btn-success">➕ Ajouter un avis</a>
+    </div>
+
     {% if lesaviss|length > 0 %}
         <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered align-middle text-center">

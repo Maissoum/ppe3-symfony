@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<style>
+    .form-card {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 15px;
+        background-color: #fdf6e3;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        color: #333;
+    }
+
+    .form-card h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .btn-submit {
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .flash-message {
+        max-width: 600px;
+        margin: 20px auto;
+    }
+</style>
+{% endblock %}
+
+{% block title %}Ajout / Modification Avis{% endblock %}
+
+{% block body %}
+
+<div class="flash-message">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+<div class="form-card">
+    <h2>
+        {% if app.request.attributes.get('_route') == 'admin_avis_ajout' %}
+            <i class="fas fa-plus-circle"></i> Ajouter un Avis
+        {% else %}
+            <i class="fas fa-edit"></i> Modifier l'Avis
+        {% endif %}
+    </h2>
+
+    {{ form_start(formAvis, {'attr': {'novalidate':'novalidate'}}) }}
+
+    <div class="form-group">
+        {{ form_label(formAvis.flms) }}
+        {{ form_widget(formAvis.flms, {'attr': {'class':'form-control'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formAvis.note) }}
+        {{ form_widget(formAvis.note, {'attr': {'class':'form-control', 'min':0, 'max':10}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formAvis.commentaire) }}
+        {{ form_widget(formAvis.commentaire, {'attr': {'class':'form-control','placeholder':'Votre commentaire'}}) }}
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <input type="submit" class="btn btn-primary btn-submit" 
+               value="{% if app.request.attributes.get('_route') == 'admin_avis_ajout' %}Ajouter{% else %}Modifier{% endif %}">
+        <a href="{{ path('admin_avis_liste') }}" class="btn btn-secondary btn-submit">Annuler</a>
+    </div>
+
+    {{ form_end(formAvis) }}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
