@@ -23,31 +23,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
-               <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">film</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{path('film')}}">liste des films</a>
-                        </div>
+               <li class="nav-item ">
+                            <a class="nav-link" href="{{path('film')}}">liste des films</a>
                     </li>
 
-                <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categorie</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{path('categorie')}}">liste des categorie</a>
-                        </div>
+                <li class="nav-item ">
+                            <a class="nav-link" href="{{path('categorie')}}">liste des categories</a>                        
                     </li>
-                  <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Avis</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{path('avis')}}">Tous vos avis</a>
-                        </div>
+                  <li class="nav-item ">
+                            <a class="nav-link" href="{{path('avis')}}">Tous vos avis</a>
                     </li>
-                  <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Abonnement</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{path('abonnement')}}">Nos abonnement</a>
-                        </div>
+                  <li class="nav-item ">
+                            <a class="nav-link" href="{{path('abonnement')}}">Nos abonnement</a>
                     </li>
+
+
+    {% if app.user and is_granted('ROLE_ADMIN') %}
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrateur</a>
@@ -57,9 +48,35 @@
                             <a class="dropdown-item" href="{{path('admin_avis_liste')}}">Gestion des avis</a>
                         </div>
                     </li>
-      
+    {% endif %}     
 
             </ul>
+
+             <ul class="navbar-nav my-auto">
+
+
+            {% if app.user %}
+              <li class="nav-item">
+                    <img class="avatar supermini" src="{{app.user.avatar}}" alt="photo de {{app.user.fullName}}">
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{app.user.fullName}}</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#">Mon profil</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{path('app_logout')}}">Se déconnecter</a>
+                    </div>
+                </li>
+        
+            {% else %}
+                <li class="nav-item">
+                    <a href="{{path('login')}}" class="nav-link">Se connecter</a>                
+                </li>
+                <li class="nav-item">
+                    <a href="{{path('app_register')}}" class="nav-link">S'inscrire</a>                
+                </li>
+              
+            {% endif %}
 
         </div>
         </nav>

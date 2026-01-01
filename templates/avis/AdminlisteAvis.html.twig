@@ -1,38 +1,71 @@
 {% extends 'base.html.twig' %}
-{# tidjani #}
-{% block title %}Gestion des Avis{% endblock %}
+
+{% block title %}Liste des avis{% endblock %}
 
 {% block body %}
-<h1 class="pt-2 text-center">📝 Gestion des Avis</h1>
-<a href="{{ path('admin_avis_ajout') }}" class="btn btn-info mb-3">Ajouter un avis</a>
+<h1 class="text-center pt-3">📝 Liste des avis</h1>
+<hr>
 
-<div class="table-responsive">
-    <table class="table table-hover table-striped table-bordered text-center align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>Film</th>
-                <th>Note</th>
-                <th>Commentaire</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for avis in lesAvis %}
-            <tr>
-                <td><a href="{{ path('fichefilm', {'id': avis.flms.id}) }}">{{ avis.flms.titre }}</a></td>
-                <td><span class="badge bg-warning text-dark">{{ avis.note }}/10</span></td>
-                <td class="text-start">{{ avis.commentaire }}</td>
-                <td>
-                    <a href="{{ path('admin_avis_modif', {'id': avis.id}) }}" class="btn btn-primary"><i class="fas fa-pen"></i></a>
-                    <a href="{{ path('admin_avis_supp', {'id': avis.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4"><em>Aucun avis trouvé.</em></td>
-            </tr>
+<div class="container mt-4">
+
+    {# Affichage des messages flash #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    {% endfor %}
+
+    <div class="mb-3 text-end">
+        <a href="{{ path('admin_avis_ajout') }}" class="btn btn-success">➕ Ajouter un avis</a>
+    </div>
+
+    {% if lesaviss|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Film</th>
+                        <th scope="col">Note</th>
+                        <th scope="col">Commentaire</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for avis in lesaviss %}
+                        <tr>
+                            <td>
+                                {% if avis.flms %}
+                                    <a href="{{ path('fichefilm', {'id': avis.flms.id}) }}">
+                                        {{ avis.flms.titre }}
+                                    </a>
+                                {% else %}
+                                    <em>Film supprimé</em>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if avis.note <= 4 %}
+                                    <span class="badge bg-danger text-white">{{ avis.note }}/10</span>
+                                {% elseif avis.note <= 7 %}
+                                    <span class="badge bg-warning text-dark">{{ avis.note }}/10</span>
+                                {% else %}
+                                    <span class="badge bg-success text-white">{{ avis.note }}/10</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-start">{{ avis.commentaire }}</td>
+                            <td>
+                                <a href="{{ path('admin_avis_modif', {'id': avis.id}) }}" class="btn btn-primary btn-sm mb-1">✏️ Modifier</a>
+                                <a href="{{ path('admin_avis_supp', {'id': avis.id}) }}" class="btn btn-danger btn-sm mb-1" onclick="return confirm('Voulez-vous vraiment supprimer cet avis ?')">🗑 Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center"><em>Aucun avis trouvé.</em></p>
+    {% endif %}
 </div>
 {% endblock %}
