@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Flm;
 use App\Form\FlmType;
@@ -16,6 +16,7 @@ class AdminFilmController extends AbstractController
     #[Route('/admin/film', name: 'admin_film_liste')]
     public function liste(FlmRepository $repo): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('film/AdminlisteFilm.html.twig', [
             'lesFilms' => $repo->findAll()
         ]);
@@ -24,6 +25,7 @@ class AdminFilmController extends AbstractController
     #[Route('/admin/film/ajout', name: 'admin_film_ajout')]
     public function ajout(Request $request, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $film = new Flm();
         $form = $this->createForm(FlmType::class, $film);
 
@@ -44,6 +46,7 @@ class AdminFilmController extends AbstractController
     #[Route('/admin/film/modif/{id}', name: 'admin_film_modif')]
     public function modif(Flm $film, Request $request, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(FlmType::class, $film);
 
         $form->handleRequest($request);
@@ -62,6 +65,7 @@ class AdminFilmController extends AbstractController
     #[Route('/admin/film/supp/{id}', name: 'admin_film_supp')]
     public function supp(Flm $film, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em->remove($film);
         $em->flush();
 

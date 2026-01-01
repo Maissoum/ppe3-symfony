@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Cat;
 use App\Form\CatType;
@@ -16,6 +16,7 @@ class AdminCategorieController extends AbstractController
     #[Route('/admin/categorie', name: 'admin_categorie_liste')]
     public function liste(CatRepository $repo): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('categorie/AdminlisteCategorie.html.twig', [
             'lesCategories' => $repo->findAll()
         ]);
@@ -24,6 +25,7 @@ class AdminCategorieController extends AbstractController
     #[Route('/admin/categorie/ajout', name: 'admin_categorie_ajout')]
     public function ajout(Request $request, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $cat = new Cat();
         $form = $this->createForm(CatType::class, $cat);
 
@@ -44,6 +46,7 @@ class AdminCategorieController extends AbstractController
     #[Route('/admin/categorie/modif/{id}', name: 'admin_categorie_modif')]
     public function modif(Cat $cat, Request $request, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(CatType::class, $cat);
 
         $form->handleRequest($request);
@@ -62,6 +65,7 @@ class AdminCategorieController extends AbstractController
     #[Route('/admin/categorie/supp/{id}', name: 'admin_categorie_supp')]
     public function supp(Cat $cat, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em->remove($cat);
         $em->flush();
 

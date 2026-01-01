@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Avis;
 use App\Form\AvisType;
@@ -16,6 +16,7 @@ class AdminAvisController extends AbstractController
     #[Route('/admin/avis', name: 'admin_avis_liste')]
     public function liste(AvisRepository $repo): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('avis/AdminlisteAvis.html.twig', [
             'lesaviss' => $repo->findAll()
         ]);
@@ -24,6 +25,8 @@ class AdminAvisController extends AbstractController
     #[Route('/admin/avis/ajout', name: 'admin_avis_ajout')]
     public function ajout(Request $request, EntityManagerInterface $em): Response
     {
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $avis = new Avis();
         $form = $this->createForm(AvisType::class, $avis);
 
@@ -47,6 +50,8 @@ class AdminAvisController extends AbstractController
     #[Route('/admin/avis/modif/{id}', name: 'admin_avis_modif')]
     public function modif(Avis $avis, Request $request, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(AvisType::class, $avis);
 
         $form->handleRequest($request);
@@ -65,6 +70,7 @@ class AdminAvisController extends AbstractController
     #[Route('/admin/avis/supp/{id}', name: 'admin_avis_supp')]
     public function supp(Avis $avis, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em->remove($avis);
         $em->flush();
 
