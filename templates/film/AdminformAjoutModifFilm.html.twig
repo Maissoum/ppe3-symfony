@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<style>
+    .form-card {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 15px;
+        background-color: #fdf6e3;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        color: #333333;
+    }
+
+    .form-card h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        color: #333333;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .btn-submit {
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+    label { font-weight: bold; }
+
+    .flash-message {
+        max-width: 700px;
+        margin: 20px auto;
+    }
+</style>
+{% endblock %}
+
+{% block title %}Ajout / Modification Film{% endblock %}
+
+{% block body %}
+
+<div class="flash-message">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+<div class="form-card">
+    <h2>
+        {% if app.request.attributes.get('_route') == 'admin_film_ajout' %}
+            🎬 Ajouter un Film
+        {% else %}
+            ✏️ Modifier le Film
+        {% endif %}
+    </h2>
+
+    {{ form_start(formFilm, {'attr': {'novalidate':'novalidate'}}) }}
+
+    <div class="form-group">
+        {{ form_label(formFilm.titre) }}
+        {{ form_widget(formFilm.titre, {'attr': {'class': 'form-control', 'placeholder':'Titre du film'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formFilm.description) }}
+        {{ form_widget(formFilm.description, {'attr': {'class': 'form-control', 'placeholder':'Description'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formFilm.dateSorti) }}
+        {{ form_widget(formFilm.dateSorti, {'attr': {'class': 'form-control', 'placeholder':'Ex: 2024'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formFilm.image) }}
+        {{ form_widget(formFilm.image, {'attr': {'class': 'form-control', 'placeholder':'URL image ou nom fichier'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formFilm.duree) }}
+        {{ form_widget(formFilm.duree, {'attr': {'class': 'form-control', 'placeholder':'Durée en minutes'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formFilm.cats) }}
+        <div class="mt-2">
+            {{ form_widget(formFilm.cats) }}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <input type="submit" class="btn btn-primary btn-submit"
+               value="{% if app.request.attributes.get('_route') == 'admin_film_ajout' %}Ajouter{% else %}Modifier{% endif %}">
+        <a href="{{ path('admin_film_liste') }}" class="btn btn-secondary btn-submit">Annuler</a>
+    </div>
+
+    {{ form_end(formFilm) }}
+</div>
+
+{% endblock %}
