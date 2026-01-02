@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Avis;
 use App\Form\AvisType;
+use App\Form\FiltreAvisType;
 use App\Repository\AvisRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,31 +15,43 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminAvisController extends AbstractController
 {
     #[Route('/admin/avis', name: 'admin_avis_liste')]
-    public function liste(AvisRepository $repo): Response
+    public function liste(AvisRepository $repo, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // Formulaire de filtre
+        $formFiltreAvis = $this->createForm(FiltreAvisType::class);
+        $formFiltreAvis->handleRequest($request);
+
+        $film = null;
+        $note = null;
+        if ($formFiltreAvis->isSubmitted() && $formFiltreAvis->isValid()) {
+            $film = $formFiltreAvis->get('flm')->getData();
+            $note = $formFiltreAvis->get('note')->getData();
+        }
+
+        $aviss = $repo->findByFilmAndNote($film, $note);
+
         return $this->render('Admin/avis/AdminlisteAvis.html.twig', [
-            'lesaviss' => $repo->findAll()
+            'lesaviss' => $aviss,
+            'formFiltreAvis' => $formFiltreAvis->createView(),
         ]);
     }
 
     #[Route('/admin/avis/ajout', name: 'admin_avis_ajout')]
     public function ajout(Request $request, EntityManagerInterface $em): Response
     {
-
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $avis = new Avis();
         $form = $this->createForm(AvisType::class, $avis);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($avis);
             $em->flush();
 
-            // Message flash ajouté avant redirection
             $this->addFlash('success', 'Avis ajouté 👍');
-
-            // Redirection vers la liste pour afficher le message
             return $this->redirectToRoute('admin_avis_liste');
         }
 
@@ -53,8 +66,8 @@ class AdminAvisController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $form = $this->createForm(AvisType::class, $avis);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
@@ -71,6 +84,7 @@ class AdminAvisController extends AbstractController
     public function supp(Avis $avis, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $em->remove($avis);
         $em->flush();
 

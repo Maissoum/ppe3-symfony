@@ -21,28 +21,31 @@ class AvisRepository extends ServiceEntityRepository
         parent::__construct($registry, Avis::class);
     }
 
-//    /**
-//     * @return Avis[] Returns an array of Avis objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Filtre les avis en fonction du titre du film et de la note minimale
+     *
+     * @param string|null $film Le titre (partiel) du film
+     * @param int|null $note Note minimale
+     * @return Avis[]
+     */
+    public function findByFilmAndNote(?string $film, ?int $note): array
+    {
+        $qb = $this->createQueryBuilder('a')
+                   ->join('a.flms', 'f'); // 'f' est le film lié à l'avis
 
-//    public function findOneBySomeField($value): ?Avis
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!empty($film)) {
+            $qb->andWhere('f.titre LIKE :film')
+               ->setParameter('film', '%' . $film . '%');
+        }
+
+        if (!empty($note)) {
+            $qb->andWhere('a.note >= :note')
+               ->setParameter('note', $note);
+        }
+
+        return $qb
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

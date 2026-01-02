@@ -6,6 +6,23 @@
 <h1 class="text-center pt-3">📝 Liste des avis</h1>
 <hr>
 
+{{ form_start(formFiltreAvis) }}
+<div class="row g-2 mb-3">
+    <div class="col-md-6">
+        {{ form_row(formFiltreAvis.flm) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_row(formFiltreAvis.note) }}
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+    </div>
+</div>
+{{ form_end(formFiltreAvis) }}
+
+
+<hr>
+
 <div class="container mt-4">
 
     {# Affichage des messages flash #}
