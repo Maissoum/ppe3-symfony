@@ -17,7 +17,7 @@ class AdminAvisController extends AbstractController
     public function liste(AvisRepository $repo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        return $this->render('avis/AdminlisteAvis.html.twig', [
+        return $this->render('Admin/avis/AdminlisteAvis.html.twig', [
             'lesaviss' => $repo->findAll()
         ]);
     }
@@ -42,7 +42,7 @@ class AdminAvisController extends AbstractController
             return $this->redirectToRoute('admin_avis_liste');
         }
 
-        return $this->render('avis/AdminformAjoutModifAvis.html.twig', [
+        return $this->render('Admin/avis/AdminformAjoutModifAvis.html.twig', [
             'formAvis' => $form->createView()
         ]);
     }
@@ -62,7 +62,7 @@ class AdminAvisController extends AbstractController
             return $this->redirectToRoute('admin_avis_liste');
         }
 
-        return $this->render('avis/AdminformAjoutModifAvis.html.twig', [
+        return $this->render('Admin/avis/AdminformAjoutModifAvis.html.twig', [
             'formAvis' => $form->createView()
         ]);
     }

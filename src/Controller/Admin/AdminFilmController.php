@@ -17,7 +17,7 @@ class AdminFilmController extends AbstractController
     public function liste(FlmRepository $repo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        return $this->render('film/AdminlisteFilm.html.twig', [
+        return $this->render('Admin/film/AdminlisteFilm.html.twig', [
             'lesFilms' => $repo->findAll()
         ]);
     }
@@ -38,7 +38,7 @@ class AdminFilmController extends AbstractController
             return $this->redirectToRoute('admin_film_liste');
         }
 
-        return $this->render('film/AdminformAjoutModifFilm.html.twig', [
+        return $this->render('Admin/film/AdminformAjoutModifFilm.html.twig', [
             'formFilm' => $form->createView()
         ]);
     }
@@ -57,7 +57,7 @@ class AdminFilmController extends AbstractController
             return $this->redirectToRoute('admin_film_liste');
         }
 
-        return $this->render('film/AdminformAjoutModifFilm.html.twig', [
+        return $this->render('Admin/film/AdminformAjoutModifFilm.html.twig', [
             'formFilm' => $form->createView()
         ]);
     }

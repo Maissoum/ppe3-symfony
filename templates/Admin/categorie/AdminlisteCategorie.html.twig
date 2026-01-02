@@ -5,7 +5,16 @@
 {% block body %}
 <h1 class="pt-2 text-center">𝔾𝕖𝕤𝕥𝕚𝕠𝕟 𝕕𝕖𝕤 𝕔𝕒𝕥égories</h1>
 <a href="{{ path('admin_categorie_ajout') }}" class="btn btn-info mb-3">Ajouter une catégorie</a>
+<hr>
 
+{{ form_start (formFiltreCat) }}
+{{ form_row (formFiltreCat.nom) }}
+<hr>
+<button type="submit" class="btn btn-primary mb-3">Rechercher</button>
+
+{{ form_end (formFiltreCat) }}
+
+<hr>
 {# ======= AFFICHAGE DES MESSAGES FLASH ======= #}
 {% for label, messages in app.flashes %}
     {% for message in messages %}

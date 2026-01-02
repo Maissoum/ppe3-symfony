@@ -6,6 +6,15 @@
 <h1 class="text-center pt-3">🔖 Liste des catégories</h1>
 <hr>
 
+
+{{ form_start (formFiltreCat) }}
+{{ form_row (formFiltreCat.nom) }}
+
+<button type="submit" class="btn btn-primary mb-3">Rechercher</button>
+
+{{ form_end (formFiltreCat) }}
+<hr>
+
 <div class="container mt-4">
     <div class="row">
 

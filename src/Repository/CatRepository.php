@@ -21,28 +21,24 @@ class CatRepository extends ServiceEntityRepository
         parent::__construct($registry, Cat::class);
     }
 
-//    /**
-//     * @return Cat[] Returns an array of Cat objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Recherche des catégories par nom (partiel)
+     *
+     * @param string|null $nom
+     * @return Cat[]
+     */
+    public function findByNom(?string $nom): array
+    {
+        $qb = $this->createQueryBuilder('c');
 
-//    public function findOneBySomeField($value): ?Cat
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!empty($nom)) {
+            $qb->andWhere('c.nom LIKE :nom')
+               ->setParameter('nom', '%' . $nom . '%');
+        }
+
+        return $qb
+            ->orderBy('c.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
