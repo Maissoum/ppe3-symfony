@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Flm;
+use App\Form\FiltreFilmType;
 use App\Form\FlmType;
 use App\Repository\FlmRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,11 +15,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminFilmController extends AbstractController
 {
     #[Route('/admin/film', name: 'admin_film_liste')]
-    public function liste(FlmRepository $repo): Response
+    public function liste(Request $request, FlmRepository $repo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $formFiltreFilm = $this->createForm(FiltreFilmType::class);
+        $formFiltreFilm->handleRequest($request);
+
+
+        //on réxupere la saisie dans le formulaire du titre
+        if ($formFiltreFilm->isSubmitted() && $formFiltreFilm->isValid()) {
+            $titre = $formFiltreFilm->get('titre')->getData();
+        }
+        
         return $this->render('Admin/film/AdminlisteFilm.html.twig', [
-            'lesFilms' => $repo->findAll()
+            'lesFilms' => $repo->findAll(),
+            'formFiltreFilm'=> $formFiltreFilm-> createView(),
+            
         ]);
     }
 
