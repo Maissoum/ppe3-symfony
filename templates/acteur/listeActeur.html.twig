@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste acteur{% endblock %}
+
+{% block body %}
+<h1 class="pt-2 text-center"> 🎬 Liste Acteur</h1>
+<hr>
+
+<div class="row pt-2">
+    {% for leacteur in lesacteurs %}
+
+    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+        <div class="card mb-3">
+            <h3 class="card-header">
+                <a href="{{ path('ficheacteur', {'id': leacteur.id}) }}">{{ leacteur.nom }}</a>
+            </h3>
+            <h3 class="card-header">
+                <a href="{{ path('fichefilm', {'id': lefilm.id}) }}">{{ lefilm.titre}}</a>
+            </h3>
+
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span class="badge" style="background-color: purple;">
+                        {{ lefilm.duree }} min
+                    </span>
+                </h5>
+            </div>
+
+            <img class="avatar mx-auto d-block" style="height:auto;width:200px;" src="{{ lefilm.image }}" alt="Card image">
+
+            <div class="card-body">
+                <p class="card-text">
+                    Année de naissance : {{ leacteur.dateNaissance }}
+                </p>
+            </div>
+
+            <div class="card-body">
+                <p class="card-text">{{ lefilm.description|slice(0, 50) }}...</p>
+            </div>
+
+            
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}
