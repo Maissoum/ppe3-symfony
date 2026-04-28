@@ -37,10 +37,14 @@ class Flm
     #[ORM\OneToMany(mappedBy: 'flms', targetEntity: Avis::class)]
     private Collection $aviss;
 
+    #[ORM\ManyToMany(targetEntity: Acteur::class, inversedBy: 'flms')]
+    private Collection $acteur;
+
     public function __construct()
     {
         $this->cats = new ArrayCollection();
         $this->aviss = new ArrayCollection();
+        $this->acteur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -168,6 +172,30 @@ class Flm
                 $aviss->setFlms(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Acteur>
+     */
+    public function getActeur(): Collection
+    {
+        return $this->acteur;
+    }
+
+    public function addActeur(Acteur $acteur): static
+    {
+        if (!$this->acteur->contains($acteur)) {
+            $this->acteur->add($acteur);
+        }
+
+        return $this;
+    }
+
+    public function removeActeur(Acteur $acteur): static
+    {
+        $this->acteur->removeElement($acteur);
 
         return $this;
     }
