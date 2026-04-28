@@ -16,9 +16,7 @@ class FilmController extends AbstractController
         $films =$repo->findAll();
         return $this->render('film/listeFilm.html.twig' , [
             'lesfilms' => $films
-        ]
-    
-    );
+        ]);
     }
 
        #[Route('/film/{id}', name: 'fichefilm', methods: ['GET'])]
